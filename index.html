@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/opacity.css">
+    <title>Hello, world!</title>
+</head>
+
+<body>
+    <div id="outer" style="height: 300vh;">
+        <h1 id="heading" class="opa" data-pos="3">頭城海岸線變遷<br>2003-2021</h1>
+        <img data-pos="1" class="img opa" src="pic2003.jpg" alt="">
+        <img data-pos="2" class="img opa" src="pic2013.jpg" alt="">
+        <img data-pos="3" class="img opa" src="pic2021.jpg" alt="">
+    </div>
+
+    <div style="height: 100vh;"></div>
+    <div class="row">
+        <div id="pic" class="col-6" style="height: 100vh;">
+            <img id="bg-img" src="pic2003.jpg" alt="">
+        </div>
+        <div class="col-6" style="height: 400vh;">
+            <div class="maploc sticky-top" data-x="-30%" data-y="-5%" data-scale="1"
+                style="height: 100vh; background-color: #8E8E8E;">
+                <p>烏石港的歷史可追溯至清領時期，在泥沙大量淤積後沒落。
+                    1989年第二期台灣漁港建設方案中，為了在宜蘭海岸增添漁港，
+                    烏石港的重要性重新被看見，2001年重建工程完工。
+                </p>
+            </div>
+            <div class="maploc sticky-top" data-x="0%" data-y="-50%" data-scale="2"
+                style="height: 100vh; background-color: #757575;">
+                <p>2008年時，有人發現烏石港南側的「頭城海水浴場」沙灘面積逐年縮小。烏石港的興建使南岸發生了突堤效應，南岸的泥沙侵蝕加劇，被黑潮帶離而堆積在北岸。</p>
+
+            </div>
+            <div class="maploc sticky-top" data-x="-20%" data-y="-10%" data-scale="1"
+                style="height: 200vh; background-color: #484848;">
+                <p>現今「頭城海水浴場」已消失並更名為「濱海園區」，避免遊客遭名稱誤導而前往遊憩。烏石港北堤則因為泥沙逐年堆積，反而成為取代舊海水浴場的新景點，也因地勢與波浪的合適性而成為衝浪客的新熱點。
+                </p>
+            </div>
+            <!--     在右邊區塊設定位置變數，再用js偵測改變圖片的bg-pos -->
+        </div>
+    </div>
+    <div style="height: 100vh; background-color: black;"></div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+    </script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
+    </script>
+
+    <script>
+        $(function () {
+            var scrollable = $("#outer").height() - $(window).height();
+            $(window).scroll(function () {
+                var scrolled = $(window).scrollTop();
+                $(".opa").each(function () {
+                    $(this).css("opacity", $(this).data("pos") - (2 * scrolled) / scrollable);
+                    // 設定data-pos變數，讓第一層的數字先減完變透明，第二層在第一層消失時剛好透明度為1
+                });
+
+                $(".maploc").each(function () {
+                    var this_pos = $(this).offset().top;
+                    // 區塊上緣高度
+                    var this_height = $(this).height();
+                    // 區塊本身的高度
+                    if (scrolled >= this_pos && scrolled < this_height + this_pos) {
+                        $("#bg-img").css({
+                            transform: "translate(" + $(this).data("x") + ", " + $(this)
+                                .data("y") + ") scale(" + $(this).data("scale") + ")"
+                        });
+
+                    }
+                });
+
+            })
+        });
+    </script>
+
+</body>
+
+</html>
